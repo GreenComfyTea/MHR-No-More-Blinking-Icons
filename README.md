@@ -1,17 +1,16 @@
-# "Loadout Wipe" Mod for Monster Hunter: Rise
+# "No More Blinking Icons" Mod for Monster Hunter: Rise
 
-Mod for Monster Hunter Rise that wipes all your equipment loadouts.
-If for some reason (cheating, for example) you messed up your loadouts and now when you try to open "Equipment Loadouts" menu the game crashed, you can use this mod to wipe all loadouts.
+A mod that fixes blinking of Status Icons and Weapon Icons for the player, other players, buddies and followers. No more epilepsy.
 
-![image](https://user-images.githubusercontent.com/30152047/184539453-c1ef09e7-8ed0-43b8-91f5-3d6ddb438ea9.png)
+![2](https://user-images.githubusercontent.com/30152047/185434717-8a2f2e89-f0d8-400e-9ff8-675e4920ff8f.png)
 
 
 # Links
-* **[Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/812)**  
+* **[Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/76)**  
 
 # Requirements
 1. [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26);
-2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.6.8 or above).
+2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.7 or above).
 
 # How to install:
 1. Install [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26);
