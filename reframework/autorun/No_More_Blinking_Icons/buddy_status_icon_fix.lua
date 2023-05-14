@@ -1,7 +1,7 @@
-local buddy_status_icon_fix = {};
+local this = {};
 
 local config;
-local table_helpers;
+local utils;
 local customization_menu;
 local blinking_icon_fix;
 
@@ -47,7 +47,7 @@ local last_timer_values = {
 	}
 };
 
-function buddy_status_icon_fix.fix_buddy_list(buddy_list, _last_timer_values, status_icon_config)
+function this.fix_buddy_list(buddy_list, _last_timer_values, status_icon_config)
 	
 	local buddy_list_count = get_count_method:call(buddy_list);
 	if buddy_list_count == nil then
@@ -85,7 +85,7 @@ function buddy_status_icon_fix.fix_buddy_list(buddy_list, _last_timer_values, st
 	end
 end
 
-function buddy_status_icon_fix.post_update_buddy_info_hud()
+function this.post_update_buddy_info_hud()
 	
 	if blinking_icon_fix.gui_manager == nil then
 		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
@@ -106,26 +106,26 @@ function buddy_status_icon_fix.post_update_buddy_info_hud()
 	if buddy_info_list == nil then
 		customization_menu.status = "No Buddy Info List";
 	else
-		buddy_status_icon_fix.fix_buddy_list(buddy_info_list, last_timer_values.players, config.current_config.status_icons.other_players);
+		this.fix_buddy_list(buddy_info_list, last_timer_values.players, config.current_config.status_icons.other_players);
 	end
 
 	local buddy_servant_info_list = buddy_servant_info_list_field:get_data(gui_hud);
 	if buddy_servant_info_list == nil then
 		customization_menu.status = "No Buddy Servant Info List";
 	else
-		buddy_status_icon_fix.fix_buddy_list(buddy_servant_info_list, last_timer_values.servants, config.current_config.status_icons.servants);
+		this.fix_buddy_list(buddy_servant_info_list, last_timer_values.servants, config.current_config.status_icons.servants);
 	end
 
 	local buddy_otomo_info_list = buddy_otomo_info_list_field:get_data(gui_hud);
 	if buddy_otomo_info_list == nil then
 		customization_menu.status = "No Buddy Otomo Info List";
 	else
-		buddy_status_icon_fix.fix_buddy_list(buddy_otomo_info_list, last_timer_values.otomos, config.current_config.status_icons.otomos);
+		this.fix_buddy_list(buddy_otomo_info_list, last_timer_values.otomos, config.current_config.status_icons.otomos);
 	end
 end
 
-function buddy_status_icon_fix.init_module()
-	table_helpers = require("No_More_Blinking_Icons.table_helpers");
+function this.init_module()
+	utils = require("No_More_Blinking_Icons.utils");
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	blinking_icon_fix = require("No_More_Blinking_Icons.blinking_icon_fix");
@@ -133,10 +133,10 @@ function buddy_status_icon_fix.init_module()
 	sdk.hook(
 		update_buddy_info_hud_method, function()
 		end, function(retval)
-			buddy_status_icon_fix.post_update_buddy_info_hud();
+			this.post_update_buddy_info_hud();
 			return retval;
 		end
 	);
 end
 
-return buddy_status_icon_fix;
+return this;

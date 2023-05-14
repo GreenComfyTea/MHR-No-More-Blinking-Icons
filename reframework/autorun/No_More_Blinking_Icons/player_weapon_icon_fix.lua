@@ -1,7 +1,7 @@
-local player_weapon_icon_fix = {};
+local this = {};
 
 local config;
-local table_helpers;
+local utils;
 local customization_menu;
 local blinking_icon_fix;
 
@@ -12,7 +12,7 @@ local gui_hud_type_def = sdk.find_type_definition("snow.gui.GuiHud");
 local update_master_player_info_hud_method = gui_hud_type_def:get_method("updateMasterPlayerInfoHud");
 local quest_player_icon_change_panel_field = gui_hud_type_def:get_field("_questPlayerIconChangePanel");
 
-function player_weapon_icon_fix.update_icon_speed()
+function this.update_icon_speed()
 	if config.current_config.weapon_icons.player.mode == "Normal" then
 		return;
 	end
@@ -38,14 +38,16 @@ function player_weapon_icon_fix.update_icon_speed()
 		return;
 	end
 
-	blinking_icon_fix.set_play_speed(weapon_icon_panel, config.current_config.weapon_icons.player.icon_update_speed_multiplier);
+	xy = tostring(weapon_icon_panel:get_PlayFrame());
+
+	--blinking_icon_fix.set_play_speed(weapon_icon_panel, config.current_config.weapon_icons.player.icon_update_speed_multiplier);
 end
 
-function player_weapon_icon_fix.init_module()
-	table_helpers = require("No_More_Blinking_Icons.table_helpers");
+function this.init_module()
+	utils = require("No_More_Blinking_Icons.utils");
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	blinking_icon_fix = require("No_More_Blinking_Icons.blinking_icon_fix");
 end
 
-return player_weapon_icon_fix;
+return this;

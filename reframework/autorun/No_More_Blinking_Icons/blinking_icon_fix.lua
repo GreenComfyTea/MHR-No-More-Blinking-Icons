@@ -1,8 +1,8 @@
-local blinking_icon_fix = {};
+local this = {};
 
 local config;
 local customization_menu;
-local table_helpers;
+local utils;
 
 local gui_manager_type_def = sdk.find_type_definition("snow.gui.GuiManager");
 local get_ref_gui_hud_method = gui_manager_type_def:get_method("get_refGuiHud");
@@ -13,20 +13,20 @@ local get_component_method = panel_type_def:get_method("get_Component");
 local gui_type_def = sdk.find_type_definition("via.gui.GUI");
 local set_play_speed_method = gui_type_def:get_method("set_PlaySpeed");
 
-blinking_icon_fix.gui_manager = nil;
+this.gui_manager = nil;
 
-function blinking_icon_fix.get_gui_manager()
-	if blinking_icon_fix.gui_manager == nil then
-		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
+function this.get_gui_manager()
+	if this.gui_manager == nil then
+		this.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
 
-		if blinking_icon_fix.gui_manager == nil then
+		if this.gui_manager == nil then
 			customization_menu.status = "No GUI Manager";
 			return;
 		end
 	end	
 end
 
-function blinking_icon_fix.set_timer_value(icon_object, timer_field, is_displayed_field, timer_field_name, last_timer_value, status_icons)
+function this.set_timer_value(icon_object, timer_field, is_displayed_field, timer_field_name, last_timer_value, status_icons)
 	if last_timer_value == nil then
 		customization_menu.status = "No Last Timer Value";
 		return 0;
@@ -97,7 +97,7 @@ function blinking_icon_fix.set_timer_value(icon_object, timer_field, is_displaye
 	return timer_value;
 end
 
-function blinking_icon_fix.set_play_speed(panel, new_speed)
+function this.set_play_speed(panel, new_speed)
 	if new_speed < 0 then
 		new_speed = 0;
 	end
@@ -113,10 +113,10 @@ function blinking_icon_fix.set_play_speed(panel, new_speed)
 	set_play_speed_method:call(component, new_speed);
 end
 
-function blinking_icon_fix.init_module()
-	table_helpers = require("No_More_Blinking_Icons.table_helpers");
+function this.init_module()
+	utils = require("No_More_Blinking_Icons.utils");
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 end
 
-return blinking_icon_fix;
+return this;

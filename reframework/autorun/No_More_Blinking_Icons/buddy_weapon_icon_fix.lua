@@ -1,7 +1,7 @@
-local player_weapon_icon_fix = {};
+local this = {};
 
 local config;
-local table_helpers;
+local utils;
 local customization_menu;
 local blinking_icon_fix;
 
@@ -18,7 +18,7 @@ local get_item_method = buddy_otomo_info_list_field_type_def:get_method("get_Ite
 local buddy_display_type_def = sdk.find_type_definition("snow.gui.GuiHud.BuddyDisp");
 local buddy_weapon_icon_change_panel_field = buddy_display_type_def:get_field("pnl_IconChange");
 
-function player_weapon_icon_fix.update_icon_speed()
+function this.update_icon_speed()
 	if config.current_config.weapon_icons.others.mode == "Normal" then
 		return;
 	end
@@ -70,11 +70,12 @@ function player_weapon_icon_fix.update_icon_speed()
 	end
 end
 
-function player_weapon_icon_fix.init_module()
-	table_helpers = require("No_More_Blinking_Icons.table_helpers");
+function this.init_module()
+	utils = require("No_More_Blinking_Icons.utils");
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	blinking_icon_fix = require("No_More_Blinking_Icons.blinking_icon_fix");
+	
 end
 
-return player_weapon_icon_fix;
+return this;

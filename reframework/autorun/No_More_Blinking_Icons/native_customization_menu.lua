@@ -1,6 +1,6 @@
-local native_customization_menu = {};
+local this = {};
 
-local table_helpers;
+local utils;
 local config;
 local customization_menu;
 local player_status_icon_fix;
@@ -26,7 +26,7 @@ local weapon_icon_mode_descriptions = {
 
 --no idea how this works but google to the rescue
 --can use this to check if the api is available and do an alternative to avoid complaints from users
-function native_customization_menu.is_module_available(name)
+function this.is_module_available(name)
 	if package.loaded[name] then
 		return true;
 	else
@@ -43,7 +43,7 @@ function native_customization_menu.is_module_available(name)
 	end
 end
 
-function native_customization_menu.draw()
+function this.draw()
 	local changed = false;
 	local config_changed = false;
 	local new_value = 0;
@@ -60,7 +60,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Status Icons - Player");
 
 		changed, index = mod_menu.Options("Mode",
-			table_helpers.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.player.mode),
+			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.player.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Player Status Icon Blinking Mode.");
@@ -91,7 +91,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Status Icons - Other Players");
 
 		changed, index = mod_menu.Options("Mode",
-			table_helpers.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.other_players.mode),
+			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.other_players.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Other Player Status Icon Blinking Mode.");
@@ -122,7 +122,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Status Icons - Followers");
 
 		changed, index = mod_menu.Options("Mode",
-			table_helpers.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.servants.mode),
+			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.servants.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Follower Status Icon Blinking Mode.");
@@ -153,7 +153,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Status Icons - Buddies");
 
 		changed, index = mod_menu.Options("Mode",
-			table_helpers.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.otomos.mode),
+			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.otomos.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Buddy Status Icon Blinking Mode.");
@@ -184,7 +184,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Weapon Icons - Player");
 
 		changed, index = mod_menu.Options("Mode",
-		table_helpers.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.player.mode),
+		utils.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.player.mode),
 			customization_menu.weapon_icon_modes,
 			weapon_icon_mode_descriptions,
 			"Adjust Player Weapon Icon Blinking Mode.");
@@ -203,7 +203,7 @@ function native_customization_menu.draw()
 		mod_menu.Header("Weapon Icons - Others");
 
 		changed, index = mod_menu.Options("Mode",
-		table_helpers.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.others.mode),
+		utils.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.others.mode),
 			customization_menu.weapon_icon_modes,
 			weapon_icon_mode_descriptions,
 			"Adjust Other Weapon Icon Blinking Mode.");
@@ -223,17 +223,17 @@ function native_customization_menu.draw()
 	end
 end
 
-function native_customization_menu.on_reset_all_settings()
-	config.current_config = table_helpers.deep_copy(config.default_config);
+function this.on_reset_all_settings()
+	config.current_config = utils.deep_copy(config.default_config);
 end
 
-function native_customization_menu.init_module()
-	table_helpers = require("No_More_Blinking_Icons.table_helpers");
+function this.init_module()
+	utils = require("No_More_Blinking_Icons.utils");
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	player_status_icon_fix = require("No_More_Blinking_Icons.player_status_icon_fix");
 
-	if native_customization_menu.is_module_available(mod_menu_api_package_name) then
+	if this.is_module_available(mod_menu_api_package_name) then
 		mod_menu = require(mod_menu_api_package_name);
 	end
 
@@ -245,11 +245,11 @@ function native_customization_menu.init_module()
 	native_UI = mod_menu.OnMenu(
 		"No More Blinking Icons",
 		"Fixes insane status and weapon icon blinking. No more epilepsy.",
-		native_customization_menu.draw
+		this.draw
 	);
 
-	native_UI.OnResetAllSettings = native_customization_menu.on_reset_all_settings;
+	native_UI.OnResetAllSettings = this.on_reset_all_settings;
 
 end
 
-return native_customization_menu;
+return this;
