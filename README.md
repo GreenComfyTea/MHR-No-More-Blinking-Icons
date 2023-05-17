@@ -14,7 +14,7 @@ A mod that fixes blinking of Status Icons and Weapon Icons for the player, other
 
 # How to install:
 1. Install [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26);
-1. [Optional] Install [[Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292);
+1. [Optional] Install [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292);
 3. Download the mod:
     * Official release can be downloaded from [Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/812);
     * Nightly builds are available in [this repo](https://github.com/GreenComfyTea/MHR-Better-Matchmaking) and can contain broken functionality, debugging info on screen, bugs and might require the latest [nightly build](https://github.com/praydog/REFramework-nightly/releases) of [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26). Use with caution!
