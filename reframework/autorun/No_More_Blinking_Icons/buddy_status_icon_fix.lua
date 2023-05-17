@@ -162,8 +162,11 @@ function this.init_module()
 	sdk.hook(
 		update_buddy_info_hud_method, function()
 		end, function(retval)
-			this.post_update_buddy_info_hud();
-			buddy_weapon_icon_fix.update_icon_frames();
+			if config.current_config.enabled then
+				this.post_update_buddy_info_hud();
+				buddy_weapon_icon_fix.update_icon_frames();
+			end
+			
 			return retval;
 		end
 	);

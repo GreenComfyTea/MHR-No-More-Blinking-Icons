@@ -112,6 +112,20 @@ function this.draw()
 	--imgui.text("Status: " .. tostring(customization_menu.status));
 
 	if true then
+		mod_menu.Header("Global Settings");
+
+		changed, config.current_config.enabled = mod_menu.CheckBox("Enabled", config.current_config.enabled, "Enable/Disable \"No More Blinking Icons\" Mod.\n");
+		config_changed = config_changed or changed;
+
+		if mod_menu.Button("", "Reset Config", false, "Reset All Values to Default.") then
+			config.reset();
+			config_changed = true;
+
+			mod_menu.Repaint();
+		end
+	end
+
+	if true then
 		mod_menu.Header("Status Icons - Player");
 
 		changed, index = mod_menu.Options("Mode",
@@ -322,7 +336,7 @@ function this.init_module()
 
 	native_UI = mod_menu.OnMenu(
 		"No More Blinking Icons",
-		"Fixes insane status and weapon icon blinking. No more epilepsy.",
+		"Fixes insane status and weapon icon blinking. No more\nepilepsy.",
 		this.draw
 	);
 

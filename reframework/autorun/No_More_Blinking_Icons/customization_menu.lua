@@ -75,7 +75,16 @@ function this.draw()
 	local changed = false;
 	local index = 1;
 
+	if imgui.button("Reset Config") then
+		config.reset();
+		config_changed = true;
+	end
+
+	imgui.same_line();
 	imgui.text("Status: " .. tostring(this.status));
+
+	changed, config.current_config.enabled = imgui.checkbox("Enabled", config.current_config.enabled);
+	config_changed = config_changed or changed;
 
 	if imgui.tree_node("Status Icons") then
 		if imgui.tree_node("Player") then

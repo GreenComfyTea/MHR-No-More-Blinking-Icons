@@ -80,8 +80,11 @@ function this.init_module()
 	sdk.hook(update_master_player_info_method, function()
 	end,
 	function(retval)
-		this.post_update_master_player_info();
-		player_weapon_icon_fix.update_icon_frame();
+		if config.current_config.enabled then
+			this.post_update_master_player_info();
+			player_weapon_icon_fix.update_icon_frame();
+		end
+		
 		return retval;
 	end
 	);

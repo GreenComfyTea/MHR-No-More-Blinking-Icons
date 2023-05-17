@@ -42,6 +42,7 @@ this.default_config = {};
 
 function this.init()
 	this.default_config = {
+		enabled = true,
 		status_icons = {
 			player = {
 				mode = "Always Adjusted",
@@ -106,6 +107,11 @@ function this.save()
 	else
 		log.error("[No More Blinking Icons] Failed to save config.json");
 	end
+end
+
+function this.reset()
+	this.current_config = utils.table.deep_copy(this.default_config);
+	this.current_config.version = version;
 end
 
 function this.init_module()
