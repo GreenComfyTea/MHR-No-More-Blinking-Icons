@@ -9,8 +9,8 @@ A mod that fixes blinking of Status Icons and Weapon Icons for the player, other
 * **[Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/76)**  
 
 # Requirements
-1. [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26) (v1.3.7 or above);
-2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.7 or above).
+1. [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26) (v1.503 or above);
+2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.71 or above).
 
 # How to install:
 1. Install [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26);
