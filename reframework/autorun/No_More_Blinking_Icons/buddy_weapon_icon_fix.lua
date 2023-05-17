@@ -48,56 +48,77 @@ local get_count_method = buddy_otomo_info_list_field_type_def:get_method("get_Co
 local get_item_method = buddy_otomo_info_list_field_type_def:get_method("get_Item");
 
 local buddy_display_type_def = sdk.find_type_definition("snow.gui.GuiHud.BuddyDisp");
-local buddy_weapon_icon_change_panel_field = buddy_display_type_def:get_field("pnl_IconChange");
+local buddy_icon_change_panel_field = buddy_display_type_def:get_field("pnl_IconChange");
+local buddy_weapon_icon_panel_field = buddy_display_type_def:get_field("pnl_WeaponIcon");
+local buddy_discover_icon_texture_field = buddy_display_type_def:get_field("tex_DiscoverIcon");
+local buddy_progress_icon_panel_field = buddy_display_type_def:get_field("pnl_ProgressIcon");
 
-function this.update_icon_speed()
+local panel_type_def = sdk.find_type_definition("via.gui.Panel");
+local get_child_method = panel_type_def:get_method("get_Child");
+
+local last_play_frames = {};
+
+function this.update_icon_frames()
 	if config.current_config.weapon_icons.others.mode == "Normal" then
 		return;
 	end
 
+	blinking_icon_fix.get_gui_manager();
 	if blinking_icon_fix.gui_manager == nil then
-		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
-
-		if blinking_icon_fix.gui_manager == nil then
-			customization_menu.status = "No GUI Manager";
-			return;
-		end
+		return;
 	end
 	
 	local gui_hud = get_ref_gui_hud_method:call(blinking_icon_fix.gui_manager);
 	if gui_hud == nil then
-		customization_menu.status = "No GUI HUD Object";
+		customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No GUI HUD Object";
 		return;
 	end
 
 	local buddy_display_list = buddy_disp_list_field:get_data(gui_hud);
 	if buddy_display_list == nil then
-		customization_menu.status = "No Buddy Weapon Icon List";
+		customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Weapon Icon List";
 		return;
 	end
 
 	local buddy_display_list_count = get_count_method:call(buddy_display_list);
 	if buddy_display_list_count == nil then
-		customization_menu.status = "No Buddy Weapon Icon list Count";
+		customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Weapon Icon list Count";
 		return;
 	end
-
-	local new_speed = config.current_config.weapon_icons.others.icon_update_speed_multiplier;
 
 	for i = 0, buddy_display_list_count - 1 do
 		local buddy_display = get_item_method:call(buddy_display_list, i);
 		if buddy_display == nil then
-			customization_menu.status = "No Buddy Display Object";
+			customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Display Object";
 			goto continue;
 		end
 
-		local weapon_icon_panel = buddy_weapon_icon_change_panel_field:get_data(buddy_display);
+		local icon_change_panel = buddy_icon_change_panel_field:get_data(buddy_display);
+		if icon_change_panel == nil then
+			customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Icon Change Panel";
+			goto continue;
+		end
+
+		local weapon_icon_panel = buddy_weapon_icon_panel_field:get_data(buddy_display);
 		if weapon_icon_panel == nil then
-			customization_menu.status = "No Buddy Weapon Icon Panel";
+			customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Weapon Icon Panel";
 			goto continue;
 		end
 
-		blinking_icon_fix.set_play_speed(weapon_icon_panel, new_speed);
+		local discovered_icon_texture = buddy_discover_icon_texture_field:get_data(buddy_display);
+		if discovered_icon_texture == nil then
+			customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Discovered Icon Texture";
+			goto continue;
+		end
+
+		local host_icon_texture = get_child_method:call(icon_change_panel);
+		if host_icon_texture == nil then
+			customization_menu.status = "[buddy_weapon_icon_fix.update_icon_frames] No Buddy Host Icon Texture";
+			goto continue;
+		end
+
+		last_play_frames[i + 1] = blinking_icon_fix.set_play_frame(icon_change_panel, weapon_icon_panel, discovered_icon_texture, nil, host_icon_texture,
+			last_play_frames[i + 1], config.current_config.weapon_icons.others);
 		::continue::
 	end
 end
@@ -107,7 +128,6 @@ function this.init_module()
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	blinking_icon_fix = require("No_More_Blinking_Icons.blinking_icon_fix");
-	
 end
 
 return this;

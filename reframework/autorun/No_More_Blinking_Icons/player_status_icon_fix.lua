@@ -54,22 +54,19 @@ local last_timer_value = 0;
 function this.post_update_master_player_info()
 	customization_menu.status = "OK";
 	
+	blinking_icon_fix.get_gui_manager();
 	if blinking_icon_fix.gui_manager == nil then
-		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
-
-		if blinking_icon_fix.gui_manager == nil then
-			customization_menu.status = "No GUI Manager";
-			return;
-		end
+		return;
 	end
 	
 	local gui_hud = get_ref_gui_hud_method:call(blinking_icon_fix.gui_manager);
 	if gui_hud == nil then
-		customization_menu.status = "No GUI HUD Object";
+		customization_menu.status = "[player_status_icon_fix.post_update_master_player_info] No GUI HUD Object";
 		return;
 	end
 
-	last_timer_value = blinking_icon_fix.set_timer_value(gui_hud, timer_field, is_displayed_field, timer_field_name, last_timer_value, config.current_config.status_icons.player);
+	last_timer_value = blinking_icon_fix.set_timer_value(gui_hud, timer_field, is_displayed_field, timer_field_name,
+		last_timer_value, config.current_config.status_icons.player);
 end
 
 function this.init_module()
@@ -84,10 +81,7 @@ function this.init_module()
 	end,
 	function(retval)
 		this.post_update_master_player_info();
-
-		player_weapon_icon_fix.update_icon_speed();
-		buddy_weapon_icon_fix.update_icon_speed();
-		
+		player_weapon_icon_fix.update_icon_frame();
 		return retval;
 	end
 	);

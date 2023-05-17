@@ -43,36 +43,57 @@ local get_ref_gui_hud_method = gui_manager_type_def:get_method("get_refGuiHud");
 local gui_hud_type_def = sdk.find_type_definition("snow.gui.GuiHud");
 local update_master_player_info_hud_method = gui_hud_type_def:get_method("updateMasterPlayerInfoHud");
 local quest_player_icon_change_panel_field = gui_hud_type_def:get_field("_questPlayerIconChangePanel");
+local quest_player_weapon_panel_field = gui_hud_type_def:get_field("_questPlayerWeaponPanel");
+local quest_player_progress_panel_field = gui_hud_type_def:get_field("_questPlayerProgressPanel");
 
-function this.update_icon_speed()
+local gui_panel_type_def = sdk.find_type_definition("via.gui.Panel");
+local get_prev_method = gui_panel_type_def:get_method("get_Prev");
+
+
+local last_play_frame = 0;
+
+function this.update_icon_frame()
 	if config.current_config.weapon_icons.player.mode == "Normal" then
 		return;
 	end
 
+	blinking_icon_fix.get_gui_manager();
 	if blinking_icon_fix.gui_manager == nil then
-		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
-
-		if blinking_icon_fix.gui_manager == nil then
-			customization_menu.status = "No GUI Manager";
-			return;
-		end
+		return;
 	end
 	
 	local gui_hud = get_ref_gui_hud_method:call(blinking_icon_fix.gui_manager);
 	if gui_hud == nil then
-		customization_menu.status = "No GUI HUD Object";
+		customization_menu.status = "[player_weapon_icon_fix.update_icon_frame] No GUI HUD Object";
 		return;
 	end
 
-	local weapon_icon_panel = quest_player_icon_change_panel_field:get_data(gui_hud);
+	local icon_change_panel = quest_player_icon_change_panel_field:get_data(gui_hud);
+	if icon_change_panel == nil then
+		customization_menu.status = "[player_weapon_icon_fix.update_icon_frame] No Player Icon Change Panel";
+		return;
+	end
+
+	local weapon_icon_panel = quest_player_weapon_panel_field:get_data(gui_hud);
 	if weapon_icon_panel == nil then
-		customization_menu.status = "No Player Weapon Icon Panel";
+		customization_menu.status = "[player_weapon_icon_fix.update_icon_frame] No Player Weapon Icon Panel";
 		return;
 	end
 
-	xy = tostring(weapon_icon_panel:get_PlayFrame());
+	local discovered_icon_texture = get_prev_method:call(weapon_icon_panel);
+	if discovered_icon_texture == nil then
+		customization_menu.status = "[player_weapon_icon_fix.update_icon_frame] No Player Discovered Icon Texture";
+		return;
+	end
 
-	--blinking_icon_fix.set_play_speed(weapon_icon_panel, config.current_config.weapon_icons.player.icon_update_speed_multiplier);
+	local ready_icon_panel = quest_player_progress_panel_field:get_data(gui_hud);
+	if ready_icon_panel == nil then
+		customization_menu.status = "[player_weapon_icon_fix.update_icon_frame] No Player Ready Icon Panel";
+		return;
+	end
+
+	last_play_frame = blinking_icon_fix.set_play_frame(icon_change_panel, weapon_icon_panel, discovered_icon_texture, ready_icon_panel, nil,
+		last_play_frame, config.current_config.weapon_icons.player);
 end
 
 function this.init_module()

@@ -47,7 +47,15 @@ this.color_picker_flags = 327680;
 this.decimal_input_flags = 33;
 
 this.status_icon_modes = {"Normal", "Always Adjusted", "Adjusted when Visible", "Adjusted when Hidden", "Always Visible", "Always Hidden"};
-this.weapon_icon_modes = {"Normal", "Adjusted"};
+
+this.player_weapon_icon_modes = {"Normal", "Always Adjusted", "Adjusted when Visible", "Adjusted when Weapon Icon Visible", "Adjusted when Discovered Icon Visible",
+							"Adjusted when Ready Icon Visible", "Adjusted when Hidden", "Always Visible Weapon Icon", "Always Visible Discovered Icon",
+							"Always Visible Ready Icon", "Always Hidden"};
+
+this.others_weapon_icon_modes = {"Normal", "Always Adjusted", "Adjusted when Visible", "Adjusted when Weapon Icon Visible", "Adjusted when Discovered Icon Visible",
+							"Adjusted when Host Icon Visible", "Adjusted when Hidden", "Always Visible Weapon Icon", "Always Visible Discovered Icon",
+							"Always Visible Host Icon", "Always Hidden"};
+
 function this.init()
 end
 
@@ -72,7 +80,7 @@ function this.draw()
 	if imgui.tree_node("Status Icons") then
 		if imgui.tree_node("Player") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.status_icon_modes, config.current_config.status_icons.player.mode),
+				utils.table.find_index(this.status_icon_modes, config.current_config.status_icons.player.mode),
 				this.status_icon_modes);
 			config_changed = config_changed or changed;
 
@@ -81,12 +89,12 @@ function this.draw()
 			end
 
 		
-			changed, config.current_config.status_icons.player.displayed_icon_update_speed = imgui.drag_float("Displayed Icon Update Speed",
-				config.current_config.status_icons.player.displayed_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.player.displayed_icon_timer_speed = imgui.drag_float("Displayed Icon Timer Speed",
+				config.current_config.status_icons.player.displayed_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
-			changed, config.current_config.status_icons.player.hidden_icon_update_speed = imgui.drag_float("Hidden Icon Update Speed",
-				config.current_config.status_icons.player.hidden_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.player.hidden_icon_timer_speed = imgui.drag_float("Hidden Icon Timer Speed",
+				config.current_config.status_icons.player.hidden_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
 			imgui.tree_pop();
@@ -94,7 +102,7 @@ function this.draw()
 
 		if imgui.tree_node("Other Players") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.status_icon_modes, config.current_config.status_icons.other_players.mode),
+				utils.table.find_index(this.status_icon_modes, config.current_config.status_icons.other_players.mode),
 				this.status_icon_modes);
 			config_changed = config_changed or changed;
 
@@ -103,12 +111,12 @@ function this.draw()
 			end
 
 		
-			changed, config.current_config.status_icons.other_players.displayed_icon_update_speed = imgui.drag_float("Displayed Icon Update Speed",
-				config.current_config.status_icons.other_players.displayed_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.other_players.displayed_icon_timer_speed = imgui.drag_float("Displayed Icon Timer Speed",
+				config.current_config.status_icons.other_players.displayed_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
-			changed, config.current_config.status_icons.other_players.hidden_icon_update_speed = imgui.drag_float("Hidden Icon Update Speed",
-				config.current_config.status_icons.other_players.hidden_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.other_players.hidden_icon_timer_speed = imgui.drag_float("Hidden Icon Timer Speed",
+				config.current_config.status_icons.other_players.hidden_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
 			imgui.tree_pop();
@@ -116,7 +124,7 @@ function this.draw()
 
 		if imgui.tree_node("Followers") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.status_icon_modes, config.current_config.status_icons.servants.mode),
+				utils.table.find_index(this.status_icon_modes, config.current_config.status_icons.servants.mode),
 				this.status_icon_modes);
 			config_changed = config_changed or changed;
 
@@ -124,12 +132,12 @@ function this.draw()
 				config.current_config.status_icons.servants.mode = this.status_icon_modes[index];
 			end
 		
-			changed, config.current_config.status_icons.servants.displayed_icon_update_speed = imgui.drag_float("Displayed Icon Update Speed",
-				config.current_config.status_icons.servants.displayed_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.servants.displayed_icon_timer_speed = imgui.drag_float("Displayed Icon Timer Speed",
+				config.current_config.status_icons.servants.displayed_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
-			changed, config.current_config.status_icons.servants.hidden_icon_update_speed = imgui.drag_float("Hidden Icon Update Speed",
-				config.current_config.status_icons.servants.hidden_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.servants.hidden_icon_timer_speed = imgui.drag_float("Hidden Icon Timer Speed",
+				config.current_config.status_icons.servants.hidden_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
 			imgui.tree_pop();
@@ -137,7 +145,7 @@ function this.draw()
 
 		if imgui.tree_node("Buddies") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.status_icon_modes, config.current_config.status_icons.otomos.mode),
+				utils.table.find_index(this.status_icon_modes, config.current_config.status_icons.otomos.mode),
 				this.status_icon_modes);
 			config_changed = config_changed or changed;
 
@@ -145,12 +153,12 @@ function this.draw()
 				config.current_config.status_icons.otomos.mode = this.status_icon_modes[index];
 			end
 	
-			changed, config.current_config.status_icons.otomos.displayed_icon_update_speed = imgui.drag_float("Displayed Icon Update Speed",
-				config.current_config.status_icons.otomos.displayed_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.otomos.displayed_icon_timer_speed = imgui.drag_float("Displayed Icon Timer Speed",
+				config.current_config.status_icons.otomos.displayed_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
-			changed, config.current_config.status_icons.otomos.hidden_icon_update_speed = imgui.drag_float("Hidden Icon Update Speed",
-				config.current_config.status_icons.otomos.hidden_icon_update_speed, 0.0001, 0, 1, "%.4f");
+			changed, config.current_config.status_icons.otomos.hidden_icon_timer_speed = imgui.drag_float("Hidden Icon Timer Speed",
+				config.current_config.status_icons.otomos.hidden_icon_timer_speed, 0.0001, 0, 1, "%.4f");
 			config_changed = config_changed or changed;
 
 			imgui.tree_pop();
@@ -162,33 +170,58 @@ function this.draw()
 	if imgui.tree_node("Weapon Icons") then
 		if imgui.tree_node("Player") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.weapon_icon_modes, config.current_config.weapon_icons.player.mode),
-				this.weapon_icon_modes);
+				utils.table.find_index(this.player_weapon_icon_modes, config.current_config.weapon_icons.player.mode),
+				this.player_weapon_icon_modes);
 			config_changed = config_changed or changed;
 
 			if changed then
-				config.current_config.weapon_icons.player.mode = this.weapon_icon_modes[index];
+				config.current_config.weapon_icons.player.mode = this.player_weapon_icon_modes[index];
 			end
 		
-			changed, config.current_config.weapon_icons.player.icon_update_speed_multiplier = imgui.drag_float("Icon Update Speed Multiplier",
-				config.current_config.weapon_icons.player.icon_update_speed_multiplier, 0.001, 0, 2, "%.3f");
+			changed, config.current_config.weapon_icons.player.weapon_icon_frame_speed = imgui.drag_float("Weapon Icon Frame Speed",
+				config.current_config.weapon_icons.player.weapon_icon_frame_speed, 0.001, 0, 2, "%.3f");
 			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.player.discovered_icon_frame_speed = imgui.drag_float("Discovered Icon Frame Speed",
+				config.current_config.weapon_icons.player.discovered_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.player.ready_icon_frame_speed = imgui.drag_float("Ready Icon Frame Speed",
+				config.current_config.weapon_icons.player.ready_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.player.hidden_icon_frame_speed = imgui.drag_float("Hidden Icon Frame Speed",
+				config.current_config.weapon_icons.player.hidden_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
 
 			imgui.tree_pop();
 		end
 
 		if imgui.tree_node("Others") then
 			changed, index = imgui.combo("Mode",
-				utils.find_index(this.weapon_icon_modes, config.current_config.weapon_icons.others.mode),
-				this.weapon_icon_modes);
+				utils.table.find_index(this.others_weapon_icon_modes, config.current_config.weapon_icons.others.mode),
+				this.others_weapon_icon_modes);
 			config_changed = config_changed or changed;
 
 			if changed then
-				config.current_config.weapon_icons.others.mode = this.weapon_icon_modes[index];
+				config.current_config.weapon_icons.others.mode = this.others_weapon_icon_modes[index];
 			end
 		
-			changed, config.current_config.weapon_icons.others.icon_update_speed_multiplier = imgui.drag_float("Icon Update Speed Multiplier",
-				config.current_config.weapon_icons.others.icon_update_speed_multiplier, 0.001, 0, 2, "%.3f");
+			changed, config.current_config.weapon_icons.others.weapon_icon_frame_speed = imgui.drag_float("Weapon Icon Frame Speed",
+				config.current_config.weapon_icons.others.weapon_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.others.discovered_icon_frame_speed = imgui.drag_float("Discovered Icon Frame Speed",
+				config.current_config.weapon_icons.others.discovered_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.others.host_icon_frame_speed = imgui.drag_float("Host Icon Frame Speed",
+				config.current_config.weapon_icons.others.host_icon_frame_speed, 0.001, 0, 2, "%.3f");
+			config_changed = config_changed or changed;
+
+			changed, config.current_config.weapon_icons.others.hidden_icon_frame_speed = imgui.drag_float("Hidden Icon Frame Speed",
+				config.current_config.weapon_icons.others.hidden_icon_frame_speed, 0.001, 0, 2, "%.3f");
 			config_changed = config_changed or changed;
 
 			imgui.tree_pop();

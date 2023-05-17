@@ -43,17 +43,40 @@ local mod_menu = nil;
 local native_UI = nil;
 
 local status_icon_mode_descriptions = {
-	"Set Status Icon Blinking Mode to Normal.",
-	"Set Status Icon Blinking Mode to Always Adjusted.",
-	"Set Status Icon Blinking Mode to Adjusted when Visible.",
-	"Set Status Icon Blinking Mode to Adjusted when Hidden.",
-	"Set Status Icon Blinking Mode to Always Visible.",
-	"Set Status Icon Blinking Mode to Always Hidden."
+	"Set Status Icon Blinking Mode to \"Normal\".",
+	"Set Status Icon Blinking Mode to \"Always Adjusted\".",
+	"Set Status Icon Blinking Mode to \"Adjusted when\nVisible\".",
+	"Set Status Icon Blinking Mode to \"Adjusted when\nHidden\".",
+	"Set Status Icon Blinking Mode to \"Always Visible\".",
+	"Set Status Icon Blinking Mode to \"Always Hidden\"."
 };
 
-local weapon_icon_mode_descriptions = {
-	"Set Weapon Icon Blinking Mode to Normal.",
-	"Set Weapon Icon Blinking Mode to Always Adjusted.",
+local player_weapon_icon_mode_descriptions = {
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Normal\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Adjusted\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Visible\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Weapon Icon Visible\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Discovered Icon Visible\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Ready Icon Visible\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Hidden\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Weapon Icon\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Discovered Icon\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Ready Icon\".",
+	"Set Player's Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Hidden\"."
+};
+
+local others_weapon_icon_mode_descriptions = {
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Normal\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Adjusted\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Visible\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Weapon Icon Visible\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Discovered Icon Visible\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Host Icon Visible\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Adjusted when Hidden\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Weapon Icon\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Discovered Icon\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Visible Host Icon\".",
+	"Set Others' Weapon/Discovered/Ready Icon Blinking\nMode to \"Always Hidden\"."
 };
 
 --no idea how this works but google to the rescue
@@ -92,7 +115,7 @@ function this.draw()
 		mod_menu.Header("Status Icons - Player");
 
 		changed, index = mod_menu.Options("Mode",
-			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.player.mode),
+			utils.table.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.player.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Player Status Icon Blinking Mode.");
@@ -102,20 +125,20 @@ function this.draw()
 			config.current_config.status_icons.player.mode = customization_menu.status_icon_modes[index];
 		end
 		
-		changed, new_value = mod_menu.FloatSlider("Displayed Icon Update Speed (x10)",
-			config.current_config.status_icons.player.displayed_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Displayed Icon Timer Speed (x10)",
+			config.current_config.status_icons.player.displayed_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.player.displayed_icon_update_speed = new_value / 10;
+			config.current_config.status_icons.player.displayed_icon_timer_speed = new_value / 10;
 		end
 
-		changed, new_value = mod_menu.FloatSlider("Hidden Icon Update Speed (x10)",
-			config.current_config.status_icons.player.hidden_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Hidden Icon Timer Speed (x10)",
+			config.current_config.status_icons.player.hidden_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.player.hidden_icon_update_speed  = new_value / 10;
+			config.current_config.status_icons.player.hidden_icon_timer_speed  = new_value / 10;
 		end
 	end
 
@@ -123,7 +146,7 @@ function this.draw()
 		mod_menu.Header("Status Icons - Other Players");
 
 		changed, index = mod_menu.Options("Mode",
-			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.other_players.mode),
+			utils.table.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.other_players.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Other Player Status Icon Blinking Mode.");
@@ -133,20 +156,20 @@ function this.draw()
 			config.current_config.status_icons.other_players.mode = customization_menu.status_icon_modes[index];
 		end
 		
-		changed, new_value = mod_menu.FloatSlider("Displayed Icon Update Speed (x10)",
-			config.current_config.status_icons.other_players.displayed_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Displayed Icon Timer Speed (x10)",
+			config.current_config.status_icons.other_players.displayed_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.other_players.displayed_icon_update_speed = new_value / 10;
+			config.current_config.status_icons.other_players.displayed_icon_timer_speed = new_value / 10;
 		end
 
-		changed, new_value = mod_menu.FloatSlider("Hidden Icon Update Speed (x10)",
-			config.current_config.status_icons.other_players.hidden_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Hidden Icon Timer Speed (x10)",
+			config.current_config.status_icons.other_players.hidden_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.other_players.hidden_icon_update_speed  = new_value / 10;
+			config.current_config.status_icons.other_players.hidden_icon_timer_speed  = new_value / 10;
 		end
 	end
 
@@ -154,7 +177,7 @@ function this.draw()
 		mod_menu.Header("Status Icons - Followers");
 
 		changed, index = mod_menu.Options("Mode",
-			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.servants.mode),
+			utils.table.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.servants.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Follower Status Icon Blinking Mode.");
@@ -164,20 +187,20 @@ function this.draw()
 			config.current_config.status_icons.servants.mode = customization_menu.status_icon_modes[index];
 		end
 		
-		changed, new_value = mod_menu.FloatSlider("Displayed Icon Update Speed (x10)",
-			config.current_config.status_icons.servants.displayed_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Displayed Icon Timer Speed (x10)",
+			config.current_config.status_icons.servants.displayed_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.servants.displayed_icon_update_speed = new_value / 10;
+			config.current_config.status_icons.servants.displayed_icon_timer_speed = new_value / 10;
 		end
 
-		changed, new_value = mod_menu.FloatSlider("Hidden Icon Update Speed (x10)",
-			config.current_config.status_icons.servants.hidden_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Hidden Icon Timer Speed (x10)",
+			config.current_config.status_icons.servants.hidden_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.servants.hidden_icon_update_speed  = new_value / 10;
+			config.current_config.status_icons.servants.hidden_icon_timer_speed  = new_value / 10;
 		end
 	end
 
@@ -185,7 +208,7 @@ function this.draw()
 		mod_menu.Header("Status Icons - Buddies");
 
 		changed, index = mod_menu.Options("Mode",
-			utils.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.otomos.mode),
+			utils.table.find_index(customization_menu.status_icon_modes, config.current_config.status_icons.otomos.mode),
 			customization_menu.status_icon_modes,
 			status_icon_mode_descriptions,
 			"Adjust Buddy Status Icon Blinking Mode.");
@@ -195,20 +218,20 @@ function this.draw()
 			config.current_config.status_icons.otomos.mode = customization_menu.status_icon_modes[index];
 		end
 		
-		changed, new_value = mod_menu.FloatSlider("Displayed Icon Update Speed (x10)",
-			config.current_config.status_icons.otomos.displayed_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Displayed Icon Timer Speed (x10)",
+			config.current_config.status_icons.otomos.displayed_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's displayed.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.otomos.displayed_icon_update_speed = new_value / 10;
+			config.current_config.status_icons.otomos.displayed_icon_timer_speed = new_value / 10;
 		end
 
-		changed, new_value = mod_menu.FloatSlider("Hidden Icon Update Speed (x10)",
-			config.current_config.status_icons.otomos.hidden_icon_update_speed * 10, 0, 10, "Adjust Icon Update Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
+		changed, new_value = mod_menu.FloatSlider("Hidden Icon Timer Speed (x10)",
+			config.current_config.status_icons.otomos.hidden_icon_timer_speed * 10, 0, 10, "Adjust Icon Timer Speed when it's hidden.\nDisplayed value is 10 times bigger than the real one.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.status_icons.otomos.hidden_icon_update_speed  = new_value / 10;
+			config.current_config.status_icons.otomos.hidden_icon_timer_speed  = new_value / 10;
 		end
 	end
 
@@ -216,18 +239,30 @@ function this.draw()
 		mod_menu.Header("Weapon Icons - Player");
 
 		changed, index = mod_menu.Options("Mode",
-		utils.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.player.mode),
-			customization_menu.weapon_icon_modes,
-			weapon_icon_mode_descriptions,
-			"Adjust Player Weapon Icon Blinking Mode.");
+			utils.table.find_index(customization_menu.player_weapon_icon_modes, config.current_config.weapon_icons.player.mode),
+			customization_menu.player_weapon_icon_modes,
+			player_weapon_icon_mode_descriptions,
+			"Adjust Player's Weapon/Discovered/Ready Icon\nBlinking Mode.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.weapon_icons.player.mode = customization_menu.weapon_icon_modes[index];
+			config.current_config.weapon_icons.player.mode = customization_menu.player_weapon_icon_modes[index];
 		end
 		
-		changed, config.current_config.weapon_icons.player.icon_update_speed_multiplier = mod_menu.FloatSlider("Icon Update Speed Multiplier",
-			config.current_config.weapon_icons.player.icon_update_speed_multiplier, 0, 2, "Adjust Icon Update Speed Multiplier.");
+		changed, config.current_config.weapon_icons.player.weapon_icon_frame_speed = mod_menu.FloatSlider("Weapon Icon Frame Speed",
+			config.current_config.weapon_icons.player.weapon_icon_frame_speed, 0, 2, "Adjust Player's Weapon Icon Frame Speed.");
+		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.player.discovered_icon_frame_speed = mod_menu.FloatSlider("Discovered Icon Frame Speed",
+			config.current_config.weapon_icons.player.discovered_icon_frame_speed, 0, 2, "Adjust Player's Discovered Icon Frame Speed.");
+		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.player.ready_icon_frame_speed = mod_menu.FloatSlider("Ready Icon Frame Speed",
+			config.current_config.weapon_icons.player.ready_icon_frame_speed, 0, 2, "Adjust Player's Ready Icon Frame Speed.");
+		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.player.hidden_icon_frame_speed = mod_menu.FloatSlider("Hidden Icon Frame Speed",
+			config.current_config.weapon_icons.player.hidden_icon_frame_speed, 0, 2, "Adjust Player's Hidden Icon Frame Speed.");
 		config_changed = config_changed or changed;
 	end
 
@@ -235,19 +270,30 @@ function this.draw()
 		mod_menu.Header("Weapon Icons - Others");
 
 		changed, index = mod_menu.Options("Mode",
-		utils.find_index(customization_menu.weapon_icon_modes, config.current_config.weapon_icons.others.mode),
-			customization_menu.weapon_icon_modes,
-			weapon_icon_mode_descriptions,
-			"Adjust Other Weapon Icon Blinking Mode.");
+		utils.table.find_index(customization_menu.others_weapon_icon_modes, config.current_config.weapon_icons.others.mode),
+			customization_menu.others_weapon_icon_modes,
+			others_weapon_icon_mode_descriptions,
+			"Adjust Others' Weapon/Discovered/Host Icon\nBlinking Mode.");
 		config_changed = config_changed or changed;
 
 		if changed then
-			config.current_config.weapon_icons.others.mode = customization_menu.weapon_icon_modes[index];
+			config.current_config.weapon_icons.others.mode = customization_menu.others_weapon_icon_modes[index];
 		end
-		
-		changed, config.current_config.weapon_icons.others.icon_update_speed_multiplier = mod_menu.FloatSlider("Icon Update Speed Multiplier",
-			config.current_config.weapon_icons.others.icon_update_speed_multiplier, 0, 2, "Adjust Icon Update Speed Multiplier.");
+
+		changed, config.current_config.weapon_icons.others.weapon_icon_frame_speed = mod_menu.FloatSlider("Weapon Icon Frame Speed",
+			config.current_config.weapon_icons.others.weapon_icon_frame_speed, 0, 2, "Adjust Others' Weapon Icon Frame Speed");
 		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.others.discovered_icon_frame_speed = mod_menu.FloatSlider("Discovered Icon Frame Speed",
+			config.current_config.weapon_icons.others.discovered_icon_frame_speed, 0, 2, "Adjust Others' Discovered Icon Frame Speed.");
+		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.others.host_icon_frame_speed = mod_menu.FloatSlider("Host Icon Frame Speed",
+			config.current_config.weapon_icons.others.host_icon_frame_speed, 0, 2, "Adjust Others' Host Icon Frame Speed.");
+		config_changed = config_changed or changed;
+
+		changed, config.current_config.weapon_icons.others.hidden_icon_frame_speed = mod_menu.FloatSlider("Hidden Icon Frame Speed",
+			config.current_config.weapon_icons.others.hidden_icon_frame_speed, 0, 2, "Adjust Others' Hidden Icon Frame Speed.");
 	end
 
 	if config_changed then
@@ -256,7 +302,7 @@ function this.draw()
 end
 
 function this.on_reset_all_settings()
-	config.current_config = utils.deep_copy(config.default_config);
+	config.current_config = utils.table.deep_copy(config.default_config);
 end
 
 function this.init_module()

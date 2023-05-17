@@ -4,6 +4,7 @@ local config;
 local utils;
 local customization_menu;
 local blinking_icon_fix;
+local buddy_weapon_icon_fix;
 
 local sdk = sdk;
 local tostring = tostring;
@@ -80,37 +81,36 @@ local last_timer_values = {
 };
 
 function this.fix_buddy_list(buddy_list, _last_timer_values, status_icon_config)
-	
 	local buddy_list_count = get_count_method:call(buddy_list);
 	if buddy_list_count == nil then
-		customization_menu.status = "No Buddy List Count";
+		customization_menu.status = "[buddy_status_icon_fix.fix_buddy_list] No Buddy List Count";
 		return;
 	end
 	
 	for i = 0, buddy_list_count - 1 do
 		local buddy_info = get_item_method:call(buddy_list, i);
 		if buddy_info == nil then
-			customization_menu.status = "No Buddy Info";
+			customization_menu.status = "[buddy_status_icon_fix.fix_buddy_list] No Buddy Info";
 			goto continue;
 		end
 
 		local debuff_status = debuff_status_field:get_data(buddy_info);
 		if debuff_status ~= nil then
 			_last_timer_values.debuffs[i + 1] = blinking_icon_fix.set_timer_value(debuff_status, timer_field, is_displayed_field,
-				timer_field_name, _last_timer_values.debuffs[i + 1], status_icon_config) or 0;
+				timer_field_name, _last_timer_values.debuffs[i + 1], status_icon_config);
 		end
 		
 		local buff_status = buff_status_field:get_data(buddy_info);
 		if buff_status ~= nil then
 			
 			_last_timer_values.buffs[i + 1] = blinking_icon_fix.set_timer_value(buff_status, timer_field, is_displayed_field,
-				timer_field_name, _last_timer_values.buffs[i + 1], status_icon_config) or 0;
+				timer_field_name, _last_timer_values.buffs[i + 1], status_icon_config);
 		end
 	
 		local other_status = other_status_field:get_data(buddy_info);
 		if other_status ~= nil then
 			_last_timer_values.others[i + 1] = blinking_icon_fix.set_timer_value(other_status, timer_field, is_displayed_field,
-				timer_field_name, _last_timer_values.others[i + 1], status_icon_config) or 0;
+				timer_field_name, _last_timer_values.others[i + 1], status_icon_config);
 		end
 
 		::continue::
@@ -119,38 +119,34 @@ end
 
 function this.post_update_buddy_info_hud()
 	
+	blinking_icon_fix.get_gui_manager();
 	if blinking_icon_fix.gui_manager == nil then
-		blinking_icon_fix.gui_manager = sdk.get_managed_singleton("snow.gui.GuiManager");
-
-		if blinking_icon_fix.gui_manager == nil then
-			customization_menu.status = "No GUI Manager";
-			return;
-		end
+		return;
 	end
 	
 	local gui_hud = get_ref_gui_hud_method:call(blinking_icon_fix.gui_manager);
 	if gui_hud == nil then
-		customization_menu.status = "No GUI HUD Object";
+		customization_menu.status = "[buddy_status_icon_fix.update_buddy_info_hud] No GUI HUD Object";
 		return;
 	end
 
 	local buddy_info_list = buddy_info_list_field:get_data(gui_hud);
 	if buddy_info_list == nil then
-		customization_menu.status = "No Buddy Info List";
+		customization_menu.status = "[buddy_status_icon_fix.update_buddy_info_hud] No Buddy Info List";
 	else
 		this.fix_buddy_list(buddy_info_list, last_timer_values.players, config.current_config.status_icons.other_players);
 	end
 
 	local buddy_servant_info_list = buddy_servant_info_list_field:get_data(gui_hud);
 	if buddy_servant_info_list == nil then
-		customization_menu.status = "No Buddy Servant Info List";
+		customization_menu.status = "[buddy_status_icon_fix.update_buddy_info_hud] No Buddy Servant Info List";
 	else
 		this.fix_buddy_list(buddy_servant_info_list, last_timer_values.servants, config.current_config.status_icons.servants);
 	end
 
 	local buddy_otomo_info_list = buddy_otomo_info_list_field:get_data(gui_hud);
 	if buddy_otomo_info_list == nil then
-		customization_menu.status = "No Buddy Otomo Info List";
+		customization_menu.status = "[buddy_status_icon_fix.update_buddy_info_hud] No Buddy Otomo Info List";
 	else
 		this.fix_buddy_list(buddy_otomo_info_list, last_timer_values.otomos, config.current_config.status_icons.otomos);
 	end
@@ -161,11 +157,13 @@ function this.init_module()
 	config = require("No_More_Blinking_Icons.config");
 	customization_menu = require("No_More_Blinking_Icons.customization_menu");
 	blinking_icon_fix = require("No_More_Blinking_Icons.blinking_icon_fix");
+	buddy_weapon_icon_fix = require("No_More_Blinking_Icons.buddy_weapon_icon_fix");
 
 	sdk.hook(
 		update_buddy_info_hud_method, function()
 		end, function(retval)
 			this.post_update_buddy_info_hud();
+			buddy_weapon_icon_fix.update_icon_frames();
 			return retval;
 		end
 	);
