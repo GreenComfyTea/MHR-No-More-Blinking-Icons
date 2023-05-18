@@ -2,19 +2,19 @@
 
 A mod that fixes blinking of Status Icons and Weapon Icons for the player, other players, buddies and followers. No more epilepsy.
 
-![2](https://user-images.githubusercontent.com/30152047/185434717-8a2f2e89-f0d8-400e-9ff8-675e4920ff8f.png)
+![no_more_blinking_icons_2](https://github.com/GreenComfyTea/MHR-No-More-Blinking-Icons/assets/30152047/30647f0a-d963-43ec-a835-d6ae48337b12)
 
 
 # Links
 * **[Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/76)**  
 
 # Requirements
-1. [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26) (v1.3.7 or above);
-2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.7 or above).
+1. [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26) (v1.503 or above);
+2. [Optional] [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292) (v1.71 or above).
 
 # How to install:
 1. Install [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26);
-1. [Optional] Install [[Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292);
+1. [Optional] Install [Custom In-Game Mod Menu API](https://www.nexusmods.com/monsterhunterrise/mods/1292);
 3. Download the mod:
     * Official release can be downloaded from [Nexus Mods](https://www.nexusmods.com/monsterhunterrise/mods/812);
     * Nightly builds are available in [this repo](https://github.com/GreenComfyTea/MHR-Better-Matchmaking) and can contain broken functionality, debugging info on screen, bugs and might require the latest [nightly build](https://github.com/praydog/REFramework-nightly/releases) of [REFramework](https://www.nexusmods.com/monsterhunterrise/mods/26). Use with caution!
