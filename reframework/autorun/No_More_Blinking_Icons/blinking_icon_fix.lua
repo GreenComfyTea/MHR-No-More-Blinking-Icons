@@ -301,12 +301,9 @@ function this.set_play_frame(icon_change_panel, weapon_icon_panel, discovered_ic
 
 			if play_state ~= play_states.READY then
 
-				set_play_frame_method:call(icon_change_panel, new_play_frame);
-				return new_play_frame;
+				set_play_frame_method:call(icon_change_panel, last_play_frame + FRAME_ADDITION);
+				return last_play_frame;
 			end
-
-			set_play_frame_method:call(icon_change_panel, last_play_frame + FRAME_ADDITION);
-			return last_play_frame;
 		end
 
 	elseif weapon_icon_config.mode == weapon_icon_modes.ALWAYS_VISIBLE_DISCOVERED_ICON then
