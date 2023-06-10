@@ -1,6 +1,6 @@
 <p align="center">
 	<h2 align="center"><b>"No More Blinking Icons" Mod for Monster Hunter: Rise</b></h2>
-	<p align="center">Fixes blinking of Status Icons and Weapon Icons for the player, other players, buddies and followers. No more epilepsy.</p>
+	<p align="center">Mod that fixes blinking of Status Icons and Weapon Icons for the player, other players, buddies and followers. No more epilepsy.</p>
 </p>
 
 <p align="center">
@@ -30,10 +30,10 @@
 	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/releases">
 		<img alt="Release Date" src="https://img.shields.io/github/release-date/greencomfytea/mhr-no-more-blinking-icons" />
 	</a>
-	<a>
+	<a href="">
 		<img alt="Platform" src="https://img.shields.io/badge/platform-win%20%7C%20linux%20%7C%20steam%20deck-lightgrey" />
 	</a>
-	<a>
+	<a href="">
 		<img alt="Maintenance" src="https://img.shields.io/maintenance/yes/2023" />
 	</a>
 </p>
@@ -41,27 +41,27 @@
 	<a href="https://www.nexusmods.com/monsterhunterrise/mods/26">
 		<img alt="REFramework Dependency" src="https://img.shields.io/badge/dependency-REFramework%20v1.503%2B-green" />
 	</a>
-   <a href="[https://www.nexusmods.com/monsterhunterrise/mods/26](https://www.nexusmods.com/monsterhunterrise/mods/1292)">
+   	<a href="[https://www.nexusmods.com/monsterhunterrise/mods/26](https://www.nexusmods.com/monsterhunterrise/mods/1292)">
 		<img alt="In-Game Menu Dependency" src="https://img.shields.io/badge/dependency-Custom%20In--Game%20Mod%20Menu%20API%20v1.71%2B-yellow" />
 	</a>
 </p>
 <p align="center">
-	<a>
+	<a href="">
 		<img alt="Repo Size" src="https://img.shields.io/github/repo-size/greencomfytea/mhr-no-more-blinking-icons" />
 	</a>
-	<a>
+	<a href="">
 		<img alt="Goto Counter" src="https://img.shields.io/github/search/greencomfytea/mhr-no-more-blinking-icons/goto" />
 	</a>
 	<a href="https://github.com/sponsors/greencomfytea">
 		<img alt="Sponsors" src="https://img.shields.io/github/sponsors/greencomfytea" />
 	</a>
-	<a>
+	<a href="">
 		<img alt="Watchers" src="https://img.shields.io/github/watchers/greencomfytea/mhr-no-more-blinking-icons" />
 	</a>
 	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/forks">
 		<img alt="Forks" src="https://img.shields.io/github/forks/greencomfytea/mhr-no-more-blinking-icons" />
 	</a>
-	<a>
+	<a href="">
 		<img alt="Stars" src="https://img.shields.io/github/stars/greencomfytea/mhr-no-more-blinking-icons" />
 	</a>
 </p>
