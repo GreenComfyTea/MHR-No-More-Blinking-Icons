@@ -44,12 +44,37 @@
 	</a>
 	<br>
 	<br>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
+		<img alt="Commits" src="https://custom-icon-badges.demolab.com/github/commit-activity/t/greencomfytea/mhr-no-more-blinking-icons?logo=git-commit" />
+	</a>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
+		<img alt="Last Commit" src="https://custom-icon-badges.demolab.com/github/last-commit/greencomfytea/mhr-no-more-blinking-icons?logo=git-commit" />
+	</a>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
+		<img alt="Commits Since" src="https://custom-icon-badges.demolab.com/github/commits-since/greencomfytea/mhr-no-more-blinking-icons/latest?logo=git-commit" />
+	</a>
+	<br>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
+		<img alt="Commit Activity (Year)" src="https://custom-icon-badges.demolab.com/github/commit-activity/y/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
+	</a>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
+		<img alt="Commit Activity (Month)" src="https://custom-icon-badges.demolab.com/github/commit-activity/m/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
+	</a>
+	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
+		<img alt="Commit Activity (Week)" src="https://custom-icon-badges.demolab.com/github/commit-activity/w/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
+	</a>
+	<br>
+	<br>
 	<a href="">
 		<img alt="Repo Size" src="https://custom-icon-badges.demolab.com/github/repo-size/greencomfytea/mhr-no-more-blinking-icons?logo=database" />
 	</a>
 	<a href="">
+		<img alt="Line Count" src="https://sloc.xyz/github/greencomfytea/mhr-no-more-blinking-icons" />
+	</a>
+	<a href="">
 		<img alt="Goto Counter" src="https://custom-icon-badges.demolab.com/github/search/greencomfytea/mhr-no-more-blinking-icons/goto?logo=git-compare" />
 	</a>
+	<br>
 	<a href="https://github.com/sponsors/greencomfytea">
 		<img alt="Sponsors" src="https://custom-icon-badges.demolab.com/github/sponsors/greencomfytea?logo=heart" />
 	</a>
@@ -64,26 +89,6 @@
 	</a>
 	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/traffic">
 		<img alt="Hits" src="https://custom-icon-badges.demolab.com/endpoint?url=https://hits.dwyl.com/greencomfytea/mhr-no-more-blinking-icons.json?color=blue&logo=eye" />
-	</a>
-	<br>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
-		<img alt="Last Commit" src="https://custom-icon-badges.demolab.com/github/last-commit/greencomfytea/mhr-no-more-blinking-icons?logo=git-commit" />
-	</a>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
-		<img alt="Commits Since" src="https://custom-icon-badges.demolab.com/github/commits-since/greencomfytea/mhr-no-more-blinking-icons/latest?logo=git-commit" />
-	</a>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/commits/main">
-		<img alt="Commits" src="https://custom-icon-badges.demolab.com/github/commit-activity/t/greencomfytea/mhr-no-more-blinking-icons?logo=git-commit" />
-	</a>
-	<br>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
-		<img alt="Commit Activity (Year)" src="https://custom-icon-badges.demolab.com/github/commit-activity/y/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
-	</a>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
-		<img alt="Commit Activity (Month)" src="https://custom-icon-badges.demolab.com/github/commit-activity/m/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
-	</a>
-	<a href="https://github.com/greencomfytea/mhr-no-more-blinking-icons/graphs/commit-activity">
-		<img alt="Commit Activity (Week)" src="https://custom-icon-badges.demolab.com/github/commit-activity/w/greencomfytea/mhr-no-more-blinking-icons?logo=pulse" />
 	</a>
 	<br>
 	<br>
